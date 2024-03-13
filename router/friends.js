@@ -3,9 +3,9 @@ const express = require('express');
 const router = express.Router();
 
 let friends = {
-  "johnsmith@gamil.com": { "firstName": "John", "lastName": "Doe", "DOB": "22-12-1990" },
-  "annasmith@gamil.com": { "firstName": "Anna", "lastName": "smith", "DOB": "02-07-1983" },
-  "peterjones@gamil.com": { "firstName": "Peter", "lastName": "Jones", "DOB": "21-03-1989" }
+  "johnsmith@gmail.com": { "firstName": "John", "lastName": "Doe", "DOB": "22-12-1990" },
+  "annasmith@gmail.com": { "firstName": "Anna", "lastName": "smith", "DOB": "02-07-1983" },
+  "peterjones@gmail.com": { "firstName": "Peter", "lastName": "Jones", "DOB": "21-03-1989" }
 };
 
 
@@ -16,8 +16,15 @@ router.get("/", (request, response) => {
 
 // GET by specific ID request: Retrieve a single friend with email ID
 router.get("/:email", (request, response) => {
-  // Update the code here
-  response.send("Yet to be implemented")//This line is to be replaced with actual return value
+  const { email } = request.params;
+
+  const user = friends[email];
+
+  if (!user) {
+    return response.status(404).send("User not found");
+  }
+
+  return response.status(200).send(user);
 });
 
 
