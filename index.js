@@ -55,7 +55,7 @@ app.post("/login", (request, response) => {
       data: password
     },
     'access',
-    { expiresIn: 60 * 60 }
+    { expiresIn: 60 }
   );
 
   request.session["authorization"] = {
