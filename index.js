@@ -47,18 +47,18 @@ app.post("/login", (request, response) => {
     return response.status(404).json({ message: "Error logging in" });
   }
 
-  if (authenticatedUser(username, password)) {
-    let accessToken = jwt.sign({
-      data: password
-    }, 'access', { expiresIn: 60 * 60 });
-
-    request.session["authorization"] = {
-      accessToken, username
-    }
-    return response.status(200).send("User successfully logged in");
-  } else {
+  if (!authenticatedUser(username, password)) {
     return response.status(208).json({ message: "Invalid Login. Check username and password" });
   }
+
+  let accessToken = jwt.sign({
+    data: password
+  }, 'access', { expiresIn: 60 * 60 });
+
+  request.session["authorization"] = {
+    accessToken, username
+  }
+  return response.status(200).send("User successfully logged in");
 });
 
 app.post("/register", (request, response) => {
