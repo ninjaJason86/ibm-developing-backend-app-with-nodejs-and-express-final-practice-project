@@ -30,8 +30,31 @@ router.get("/:email", (request, response) => {
 
 // POST request: Add a new friend
 router.post("/", (request, response) => {
-  // Update the code here
-  response.send("Yet to be implemented")//This line is to be replaced with actual return value
+  const { email, firstName, lastName, DOB } = request.body;
+
+  if (!email) {
+    return response.status(400).send("Email required!");
+  }
+
+  if (!firstName) {
+    return response.status(400).send("First name required!");
+  }
+
+  if (!lastName) {
+    return response.status(400).send("Last name required!");
+  }
+
+  if (!DOB) {
+    return response.status(400).send("DOB required!");
+  }
+
+  friends[email] = {
+    firstName,
+    lastName,
+    DOB,
+  }
+
+  response.status(200).send(`Your friend ${firstName} has been added!`);
 });
 
 
