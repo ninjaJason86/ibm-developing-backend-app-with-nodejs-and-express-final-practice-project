@@ -5,15 +5,10 @@ const routes = require('./router/friends.js')
 
 let users = []
 
-const doesExist = (username) => {
-  let usersWithSameName = users.filter((user) => {
-    return user.username === username
-  });
-  if (usersWithSameName.length > 0) {
-    return true;
-  } else {
-    return false;
-  }
+function doesExist(username) {
+  const userWithSameName = users.find((user) => user.username === username);
+
+  return !!userWithSameName
 }
 
 const authenticatedUser = (username, password) => {
