@@ -60,8 +60,26 @@ router.post("/", (request, response) => {
 
 // PUT request: Update the details of a friend with email id
 router.put("/:email", (request, response) => {
-  // Update the code here
-  response.send("Yet to be implemented")//This line is to be replaced with actual return value
+  const { email } = request.params;
+  const { firstName, lastName, DOB } = request.body;
+
+  if (!friends[email]) {
+    return response.status(404).send("Friend not found");
+  }
+
+  if (firstName) {
+    friends[email].firstName = firstName;
+  }
+
+  if (lastName) {
+    friends[email].lastName = lastName;
+  }
+
+  if (DOB) {
+    friends[email].DOB = DOB;
+  }
+
+  response.status(200).send(`Friend with the email ${email} updated.`);
 });
 
 
