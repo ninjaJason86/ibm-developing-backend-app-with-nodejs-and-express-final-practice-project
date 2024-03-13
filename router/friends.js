@@ -85,8 +85,14 @@ router.put("/:email", (request, response) => {
 
 // DELETE request: Delete a friend by email id
 router.delete("/:email", (request, response) => {
-  // Update the code here
-  response.send("Yet to be implemented")//This line is to be replaced with actual return value
+  const { email } = request.params;
+
+  if (!friends[email]) {
+    return response.status(404).send("Friend not found");
+  }
+
+  delete friends[email]
+  response.send(`Friend with the email  ${email} deleted.`);
 });
 
 module.exports = router;
