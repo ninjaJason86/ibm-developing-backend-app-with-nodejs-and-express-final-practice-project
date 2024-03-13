@@ -51,12 +51,17 @@ app.post("/login", (request, response) => {
     return response.status(208).json({ message: "Invalid Login. Check username and password" });
   }
 
-  let accessToken = jwt.sign({
-    data: password
-  }, 'access', { expiresIn: 60 * 60 });
+  let accessToken = jwt.sign(
+    {
+      data: password
+    },
+    'access',
+    { expiresIn: 60 * 60 }
+  );
 
   request.session["authorization"] = {
-    accessToken, username
+    accessToken,
+    username,
   }
   return response.status(200).send("User successfully logged in");
 });
