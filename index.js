@@ -74,15 +74,16 @@ app.post("/login", (request, response) => {
 app.post("/register", (request, response) => {
   const { username, password } = request.body;
 
-  if (username && password) {
-    if (!doesExist(username)) {
-      users.push({ "username": username, "password": password });
-      return response.status(200).json({ message: "User successfully registered. Now you can login" });
-    } else {
-      return response.status(404).json({ message: "User already exists!" });
-    }
+  if (!username || !password) {
+    return response.status(404).json({ message: "Unable to register user." });
   }
-  return response.status(404).json({ message: "Unable to register user." });
+
+  if (doesExist(username)) {
+    return response.status(404).json({ message: "User already exists!" });
+  }
+
+  users.push({ "username": username, "password": password });
+  return response.status(200).json({ message: "User successfully registered. Now you can login" });
 });
 
 
