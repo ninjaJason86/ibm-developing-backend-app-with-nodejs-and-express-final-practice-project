@@ -11,15 +11,10 @@ function doesExist(username) {
   return !!userWithSameName
 }
 
-const authenticatedUser = (username, password) => {
-  let validUsers = users.filter((user) => {
-    return (user.username === username && user.password === password)
-  });
-  if (validUsers.length > 0) {
-    return true;
-  } else {
-    return false;
-  }
+function authenticatedUser(username, password) {
+  const userWithSameNameAndPassword = users.find((user) => user.username === username && user.password === password);
+
+  return !!userWithSameNameAndPassword;
 }
 
 const app = express();
