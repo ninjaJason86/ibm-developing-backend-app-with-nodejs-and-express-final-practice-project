@@ -24,20 +24,19 @@ app.use(session({ secret: "fingerprint", resave: true, saveUninitialized: true }
 app.use(express.json());
 
 app.use("/friends", function auth(request, response, next) {
-  if (request.session["authorization"]) {
-    const token = request.session["authorization"]['accessToken'];
-    jwt.verify(token, "access", (err, user) => {
-      if (!err) {
-        request["user"] = user;
-        next();
-      }
-      else {
-        return response.status(403).json({ message: "User not authenticated" })
-      }
-    });
-  } else {
+  if (!request.session["authorization"]) {
     return response.status(403).json({ message: "User not logged in" })
   }
+
+  const token = request.session["authorization"]['accessToken'];
+  jwt.verify(token, "access", (error, user) => {
+    if (error) {
+      return response.status(403).json({ message: "User not authenticated" })
+    }
+
+    request["user"] = user;
+    next();
+  });
 });
 
 app.post("/login", (request, response) => {
