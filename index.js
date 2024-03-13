@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const session = require('express-session')
-const routes = require('./router/friends.js')
+const { friendsRouter } = require('./router')
 
 let users = []
 
@@ -81,8 +81,10 @@ app.post("/register", (request, response) => {
 });
 
 
-const PORT = 5000;
+const PORT = 3333;
 
-app.use("/friends", routes);
+app.use("/friends", friendsRouter);
 
-app.listen(PORT, () => console.log("Server is running"));
+app.listen(PORT, function () {
+  return console.log(`Server is running on http://localhost:${PORT}`);
+});
